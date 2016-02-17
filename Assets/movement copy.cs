@@ -10,27 +10,18 @@ public class movement : MonoBehaviour {
 	public bool bear = false;
 	public bool onground = false;
 	public bool doublejump = false;
-
 	//human variables//
 	public float movementspeed = 7.5f;
 	public float jumpspeed = 150f;
-
 	// wolf variables//
 	public float movementspeedwolf = 15f;
 	public float jumpspeedwolf = 250f;
-
 	// bird variables//
 	public float movementspeedbird = 10f;
 	public float jumpspeedbird = 100f;
-
 	// Bear Variables
 	public float movementSpeedBear = 7.5f;
 	public float jumpSpeedBear = 150f;
-
-	public string form = "human";
-	public bool formChoice = true;
-	public bool 
-
 	// Use this for initialization
 	void Start () {
 	
@@ -39,28 +30,47 @@ public class movement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		switch (formChoice) 
-		{
-		case Input.GetKey (KeyCode.J):
-			form = "wolf";
-			WolfForm ();
-			break;
-		case Input.GetKey (KeyCode.K):
-			form = "bear";
-			BearForm ();
-			break;
-		case Input.GetKey (KeyCode.L):
-			form = "bird";
-			BirdForm();
-			break;
-		default: 
-			form = "human";
-			HumanForm ();
-			break;
+		if (human == true) {
+			Humanform ();
+		}	
+		if (wolf == true) {
+			Wolfform ();
 		}
+		if (bird == true) {
+			Birdform ();
+		}
+
+		if (Input.GetKey (KeyCode.J)) 
+		{
+			wolf = false;
+			human = false;
+			bird = false;
+			bear = true;
+		}
+		if (Input.GetKey (KeyCode.K)) // WOLF form switch//
+		{
+			wolf = true;
+			human = false;
+			bird = false;
+			bear = false;
+		} 
+		else if (Input.GetKey (KeyCode.L)) // Bird form switch//
+		{
+			wolf = false;
+			human = false;
+			bird = true;
+			bear = false;
+		} 
+		else 
+		{
+			bird = false;
+			human = true;
+			wolf = false;
+		}
+
 	}
 
-	void WolfForm()
+	void Wolfform()
 	{
 		if ((onground | doublejump) & Input.GetKeyDown (KeyCode.W))
 		{
@@ -79,7 +89,7 @@ public class movement : MonoBehaviour {
 		}
 	}
 
-	void HumanForm()
+	void Humanform()
 	{
 		if ((onground | doublejump) & Input.GetKeyDown (KeyCode.W))
 		{
@@ -98,7 +108,7 @@ public class movement : MonoBehaviour {
 		}
 	}
 
-	void BirdForm()
+	void Birdform()
 	{
 		if ( Input.GetKey (KeyCode.W)){
 			rigidbody2D.AddForce (Vector2.up * jumpspeedbird);
@@ -111,7 +121,7 @@ public class movement : MonoBehaviour {
 		}
 	}
 
-	void BearForm()
+	void Bearform()
 	{
 		if (Input.GetKey (KeyCode.W)) {
 			rigidbody2D.AddForce (Vector2.up * jumpSpeedBear);
